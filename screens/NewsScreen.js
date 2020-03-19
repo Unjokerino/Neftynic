@@ -10,15 +10,16 @@ export default function HomeScreen(props) {
 
   const [events, setevents] = useState([])
   const [refreshing, setrefreshing] = useState(false)
-
+  const [visibleEvents,setvisibleEvents] = useState(20)
   useEffect(() => {
     getData()
 
   }, [])
 
   function getData(){
+    setvisibleEvents(20)
     setrefreshing(true)
-    let result = fetch("http://nefty.binarywd.com/platforms/themes/allium/news.json",{
+    let result = fetch("https://xn----gtbemkpb3brp9h.xn--p1ai/platforms/themes/allium/news.json",{
           headers: {
             "Cache-Control": "no-cache",
             "Content-Type": "application/json",
@@ -36,14 +37,22 @@ export default function HomeScreen(props) {
   return (
     <Provider style={styles.container}>
 
-      <FlatList
+      <ScrollView
         refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={getData} />
+          <RefreshControl refreshing={refreshing} onRefresh={getData} />
         }
-        data={events}
-        renderItem={({ item }) => <NewsCard navigation={props} {...item} />}
-        keyExtractor={item => item.name}
-      />
+      >
+
+        {events.map((event,index)=>{
+          if(index < visibleEvents){
+            return(
+              <NewsCard key={event.name} navigation={props} {...event} />
+            )
+          }
+        })}
+        {visibleEvents < events.length && <Button onPress={() => setvisibleEvents(visibleEvents + 10)} >Показать еще</Button>}
+
+      </ScrollView>
 
 
     </Provider>

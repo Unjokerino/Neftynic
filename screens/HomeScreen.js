@@ -10,15 +10,16 @@ export default function HomeScreen(props) {
 
   const [events, setevents] = useState([])
   const [refreshing, setrefreshing] = useState(false)
-
+  const [visibleEvents,setvisibleEvents] = useState(20)
   useEffect(() => {
     getData()
 
   }, [])
 
   function getData(){
+    setvisibleEvents(20)
     setrefreshing(true)
-    let result = fetch("http://nefty.binarywd.com/platforms/themes/allium/afisha.json",{
+    let result = fetch("https://xn----gtbemkpb3brp9h.xn--p1ai/platforms/themes/allium/afisha.json",{
           headers: {
             "Cache-Control": "no-cache",
             "Content-Type": "application/json",

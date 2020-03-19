@@ -20,7 +20,7 @@ function ItemCard(props){
                 <LinearGradient transparent={true}  colors={['#ffffff00', '#000000ad']} style={styles.cardFooter}>
                     <Text style={styles.title}>{props.name}</Text>
                     <TouchableOpacity onPress={() => {
-                            props.navigation.route.navigation.navigate('DetailEventScreen')
+                            props.navigation.route.navigation.navigate('DetailEventScreen',{...props})
                         }} style={styles.button}>
                         <Text style={styles.buttonText}>Купить</Text>
                     </TouchableOpacity>

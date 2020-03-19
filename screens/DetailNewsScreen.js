@@ -4,12 +4,17 @@ import { Title,Text, Appbar, Caption, Portal, Provider,IconButton } from "react-
 import HorizontalItemCard from "../components/HorizontalItemCard"
 import moment from "moment"
 import localization from 'moment/locale/ru'
+import ImageView from 'react-native-image-view';
+
 
 const DetailClubScreen = (props) => {
     const eventData = props.route.params
     const date = eventData.seanses ? eventData.seanses[0].date.split('/') : ''
     const [events, setevents] = useState([])
     const [refreshing, setrefreshing] = useState(false)
+    const [images, setimages] = useState([])
+    const [imageIndex, setimageIndex] = useState(0)
+    const [isImageViewVisible, setIsImageViewVisible] = useState(false)
 
   useEffect(() => {
     getData()
@@ -21,7 +26,7 @@ const DetailClubScreen = (props) => {
 
     async function getData(){
         setrefreshing(true)
-        let result = fetch("http://nefty.binarywd.com/platforms/themes/allium/news.json",{
+        let result = fetch("https://xn----gtbemkpb3brp9h.xn--p1ai/platforms/themes/allium/news.json",{
             headers: {
                 "Cache-Control": "no-cache",
                 "Content-Type": "application/json",
@@ -101,7 +106,45 @@ const DetailClubScreen = (props) => {
                     <Text style={styles.description}>
                         {eventData.description}
                     </Text>
+                    
                 </View>
+                
+                {eventData.gallery &&
+                    <View>
+                        <Title style={[styles.title,{ marginHorizontal:10,marginBottom:10}]}> Фотогаллерея </Title>
+                        <ScrollView style={{ marginHorizontal:0}} showsHorizontalScrollIndicator={false} horizontal={true}>
+                            {eventData.gallery.map((item,index) =>{
+                                 
+                                images.push({source:{
+                                    uri:item
+                                }})
+                                return(
+                                <TouchableOpacity key={item}
+                                style={{ marginHorizontal:0}}
+                                    onPress={() => {      
+                                        setimageIndex(index)
+                                        setIsImageViewVisible(true)
+                                    }}>
+                                    <Image style={styles.image}     
+                                    source={{uri: item}} />
+                                </TouchableOpacity>
+                                )
+                            })}
+                        </ScrollView>
+                        <ImageView
+                            glideAlways
+                            images={images}
+                            imageIndex={imageIndex}
+                            animationType="fade"
+                            isVisible={isImageViewVisible}
+                            onClose={() => setIsImageViewVisible(false)}
+                            onImageChange={index => {
+                                console.log(index);
+                            }}
+                        />
+                    
+                    </View>
+                }
                 <Text style={styles.phones}>
                     <Caption>Справки по телефону: </Caption>
                     <Text>34-13-95</Text>
@@ -187,6 +230,12 @@ const styles = StyleSheet.create({
             marginTop:10,
             flexDirection:'row',
             alignItems:'center'
+        },
+        image:{
+            width:150,
+            height:200,
+            marginRight:10,
+            borderRadius:10
         },
         description:{
             marginTop:10,

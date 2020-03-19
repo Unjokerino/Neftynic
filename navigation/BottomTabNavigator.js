@@ -8,6 +8,10 @@ import NewsScreen from '../screens/NewsScreen';
 import DetailEventScreen from '../screens/DetailEventScreen';
 import DetailClubScreen from '../screens/DetailClubScreen'
 import DetailNewsScreen from '../screens/DetailNewsScreen'
+import DetailGalleryScreen from '../screens/DetailGalleryScreen'
+import WebViewScreen from '../screens/WebViewScreen'
+
+
 import { BottomNavigation, Text, Appbar } from "react-native-paper";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -139,6 +143,23 @@ export default function NavigationStuckScreen(props) {
         {...props}
         component={DetailNewsScreen}
       />
+      <Stack.Screen
+        options={{
+          headerShown: false
+        }}
+        name="DetailGalleryScreen"
+        {...props}
+        component={DetailGalleryScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false
+        }}
+        name="WebViewScreen"
+        {...props}
+        component={WebViewScreen}
+      />
+      
       
     </Stack.Navigator>
   );

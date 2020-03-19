@@ -5,7 +5,7 @@ import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
+import AppNavigator from "./navigation/AppNavigator"
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
 
@@ -33,6 +33,7 @@ export default function App(props) {
           'Roboto-Medium': require('./assets/fonts/Roboto-Medium.ttf'),
           'Roboto-Regular': require('./assets/fonts/Roboto-Regular.ttf'),
           'Roboto-Thin': require('./assets/fonts/Roboto-Thin.ttf'),
+          'MaterialIcons-Regular' : require('./assets/fonts/MaterialIcons-Regular.ttf'),
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service
@@ -52,16 +53,7 @@ export default function App(props) {
     return (
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
-          <Stack.Navigator>
-            <Stack.Screen 
-              name="root" 
-              options={{
-                headerShown: false
-              }} 
-              component={BottomTabNavigator} />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <AppNavigator/>
       </View>
     );
   }

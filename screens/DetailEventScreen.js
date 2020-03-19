@@ -4,6 +4,8 @@ import { Title,Text, Appbar, Caption, Portal, Provider,IconButton } from "react-
 import HorizontalItemCard from "../components/HorizontalItemCard"
 import moment from "moment"
 import localization from 'moment/locale/ru'
+import ImageView from 'react-native-image-view';
+
 
 const DetailEventScreen = (props) => {
     const eventData = props.route.params
@@ -15,6 +17,7 @@ const DetailEventScreen = (props) => {
       inputRange: [0, 0.5, 1],
       outputRange: [1, 1.1, 1.2]
     });
+    const [images, setimages] = useState([])
 
   useEffect(() => {
     getData()
@@ -27,12 +30,13 @@ const DetailEventScreen = (props) => {
   }, [])
 
   function buyTicket(){
-      alert("Пока нельзя :с ")
+      props.navigation.navigate('WebViewScreen',{...eventData})
+      //alert("Пока нельзя :с ")
   }
 
     async function getData(){
         setrefreshing(true)
-        let result = fetch("http://nefty.binarywd.com/platforms/themes/allium/afisha.json",{
+        let result = fetch("https://xn----gtbemkpb3brp9h.xn--p1ai/platforms/themes/allium/afisha.json",{
             headers: {
                 "Cache-Control": "no-cache",
                 "Content-Type": "application/json",
@@ -92,7 +96,7 @@ const DetailEventScreen = (props) => {
                 <Text></Text>
                 <View style={styles.mainInfoContainer}>
                     <Title style={styles.title}>{eventData.name}</Title>
-                    {eventData.seanses && <View style={styles.dateContainer}>
+                    {eventData && eventData.seanses && <View style={styles.dateContainer}>
                         <Appbar.Action icon="calendar"/>
                         <Text style={styles.date}>
                             {moment(eventData.seanses[0].date).locale("ru", localization).format("D MMMM") + ' ' + eventData.seanses[0].time}  
@@ -104,7 +108,44 @@ const DetailEventScreen = (props) => {
                     <Text style={styles.description}>
                         {eventData.description}
                     </Text>
+                    
                 </View>
+
+                {eventData.gallery &&
+                <View>
+                    <Title style={[styles.title,{ marginHorizontal:5}]}> Фотогаллерея </Title>
+                    <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
+                        
+                        {eventData.gallery.map((item,index) =>{
+                            images.push({source:{
+                                uri:item
+                            }})
+                            return(
+                            <TouchableOpacity key={item}
+                            onPress={() => {      
+                                setimageIndex(index)
+                                setIsImageViewVisible(true)
+                            }}>
+                            <Image style={styles.image}     
+                            source={{
+                            uri: item}} />
+                            </TouchableOpacity>
+                            )
+                        })}
+                    </ScrollView>
+                    <ImageView
+                        glideAlways
+                        images={images}
+                        imageIndex={imageIndex}
+                        animationType="fade"
+                        isVisible={isImageViewVisible}
+                        onClose={() => setIsImageViewVisible(false)}
+                        onImageChange={index => {
+                            console.log(index);
+                        }}
+                    />
+                
+                </View>}
                 <Text style={styles.phones}>
                     <Caption>Справки по телефону: </Caption>
                     <Text>34-13-95</Text>
