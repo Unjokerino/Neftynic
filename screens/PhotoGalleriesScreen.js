@@ -1,6 +1,7 @@
 import React,{useState, useEffect} from 'react'
 import { View, StyleSheet, Image, ScrollView, RefreshControl, FlatList, TouchableOpacity } from 'react-native'
-import { Title,Text, Appbar, Caption, Portal, Provider,IconButton } from "react-native-paper";
+import { Title,Text, Appbar, Caption, Portal, Provider, IconButton, Button } from "react-native-paper";
+import PhotoGalleryCard from "../components/PhotoGalleryCard"
 import HorizontalItemCard from "../components/HorizontalItemCard"
 import moment from "moment"
 import localization from 'moment/locale/ru'
@@ -72,10 +73,7 @@ const PhotoGalleriesScreen = (props) => {
             {events.map((event,index) =>{
                 if(index < visibleEvents){
                     return(
-                        <TouchableOpacity onPress={() => props.navigation.navigate('DetailGalleryScreen',{...event})} style={styles.cardContainer}>
-                            <Image style={styles.image} source={{uri:event.img}}/>
-                            <Text style={styles.title}>{event.name}</Text>
-                        </TouchableOpacity>
+                            <PhotoGalleryCard key = {event.name} navigation = {props.navigation} {...event} />
                     )
                 }
             })}

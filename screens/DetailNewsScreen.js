@@ -149,7 +149,7 @@ const DetailClubScreen = (props) => {
                     <Caption>Справки по телефону: </Caption>
                     <Text>34-13-95</Text>
                 </Text>
-                <Title style={[styles.title,{ marginHorizontal:5}]}> Другие события афиши </Title>
+                <Title style={[styles.title,{ marginHorizontal:5}]}> Другие новости </Title>
                 <FlatList
                     showsHorizontalScrollIndicator={false}
                     horizontal={true}

@@ -10,7 +10,7 @@ function ClubsCard(props){
         <TouchableOpacity style={styles.cardContainer} onPress={() => {
             props.navigation.route.navigation.navigate('DetailClubScreen',{...props})
         }}>
-            <ImageBackground source={{uri:props.img.url}}  style={styles.card}>
+            <ImageBackground source={{uri:props.img.url ? props.img.url : props.img }}  style={styles.card}>
                 {props.seanses && 
                 <View style={styles.dateContainer}>
                     <Text style={styles.dateText}>

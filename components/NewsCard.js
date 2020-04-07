@@ -11,7 +11,7 @@ function ClubsCard(props){
     const date = props.seanses ? props.seanses[0].date.split('/') : ''
     return (
         <TouchableOpacity style={styles.cardContainer} onPress={() => {
-            props.navigation.route.navigation.navigate('DetailClubScreen',{...props})
+            props.navigation.route.navigation.navigate('DetailNewsScreen',{...props})
         }}>
             <ImageBackground source={{uri:props.img}}  style={styles.card}>
                 {props.seanses && 
