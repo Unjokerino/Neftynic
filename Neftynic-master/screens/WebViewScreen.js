@@ -8,8 +8,8 @@ const WebViewScreen = (props) => {
     console.log(eventData.name)
     const time = eventData.seanses ? eventData.seanses[0].time : null
     const date = eventData.seanses ? eventData.seanses[0].date : null
-    const url = `https://api.kinobilety.net/api/getHallplan?host=xn----gtbemkpb3brp9h.xn--p1ai&cityId=179&marketId=2588&theatreId=538&filmName=${eventData.name}&showDate=${date}&showTime=${time}`
-
+    const url = `https://api.kinobilety.net/api/getHallplan?host=xn----gtbemkpb3brp9h.xn--p1ai&cityId=179&marketId=2588&theatreId=538&filmName=${eventData.id_сinema}&showDate=${date}&showTime=${time}`
+    console.log(url)
     return (
         <View style={{ flex: 1 }}>
 

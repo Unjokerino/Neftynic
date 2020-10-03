@@ -29,7 +29,7 @@
             "bundleIdentifier": "com.mironov.neftynic"
         },
         "android": {
-            "versionCode": 8,
+            "versionCode": 9,
             "permissions": [],
             "package": "com.mironov.neftynic",
             "googleServicesFile": "./google-services.json"
